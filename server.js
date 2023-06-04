@@ -37,9 +37,12 @@ server.use('/', materialRoute)
 //server.use('/', rapportRoute)
 //server.use('/', logicielRoute)
 //server.use('/', categorieRoute)
+
+server.use('/upload', express.static('images'))
+
+
 //server.use('/', technicienRoute)
 //server.use('/', equipementRoute)
-server.use('/upload', express.static('images'))
 
 server.listen(3001)
 
