@@ -54,7 +54,7 @@ export default {
       })
   },
   getAllAdmin(req, res) {
-    console.log('yes')
+    //console.log('yes')
     Admin.findMany()
       .then((data) => {
         if (data.length > 0) {
