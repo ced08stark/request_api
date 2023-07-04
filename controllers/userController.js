@@ -8,6 +8,7 @@ const { user: User } = prisma
 
 export default {
 signUpUser(req, res){
+  console.log("toto")
     User.findUnique({ where: { email: req.body.email } })
       .then((result) => {
         if (result) {
@@ -15,38 +16,33 @@ signUpUser(req, res){
             message: 'Email already Existe',
           })
         } else {
+          console.log(req.body.password)
           bcrypt.genSalt(10, function (err, salt) {
-            bcrypt.hash(req.body.password, salt, function (error, hash) {
-              const user = {
-                email: req.body.email,
-                password: hash,
-                username: req.body.username,
-                phone: req.body.phone,
-                image: req.body.image,
-                role: req.body.role,
-              }
-              User.create(user)
-                .then((result) => {
-                      res.status(200).json({
-                        message: 'User created succes',
-                        user: result,
-                      })
+            bcrypt
+              .hash(req.body.password, salt, function (error, hash) {
+                const user = {
+                  email: req.body.email,
+                  password: hash,
+                  username: req.body.username,
+                  phone: req.body.phone,
+                  image: req.body.image,
+                  role: req.body.role,
+                }
+                User.create({ data: user })
+                  .then((result) => {
+                    res.status(200).json({
+                      message: 'User created succes',
+                      result,
                     })
-                    .catch((error) => {
-                      res.status(500).json({
-                        message: 'Somthing went Wrong',
-                        error: error,
-                      })
-                    })
-                })
-                .catch((error) => {
-                  res.status(500).json({
-                    message: 'Somthing went Wrong',
-                    error: error,
                   })
-                })
-            })
-         
+                  .catch((error) => {
+                    res.status(500).json({
+                      message: 'Somthing went Wrong',
+                      error: error,
+                    })
+                  })
+              })
+          })
         }
       })
       .catch((error) => {
@@ -54,7 +50,7 @@ signUpUser(req, res){
           message: 'Somthing went Wrong',
           error: error,
         })
-    })
+      })
 },
 
 getAllUser(req, res){
