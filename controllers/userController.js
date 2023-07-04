@@ -23,6 +23,7 @@ signUpUser(req, res){
                 username: req.body.username,
                 phone: req.body.phone,
                 image: req.body.image,
+                role: req.body.role,
               }
               User.create(user)
                 .then((result) => {
