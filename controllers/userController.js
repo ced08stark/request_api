@@ -8,7 +8,7 @@ const { user: User } = prisma
 
 export default {
 signUpUser(req, res){
-  console.log("toto")
+  console.log(req.body)
     User.findUnique({ where: { email: req.body.email } })
       .then((result) => {
         if (result) {
@@ -16,7 +16,6 @@ signUpUser(req, res){
             message: 'Email already Existe',
           })
         } else {
-          console.log(req.body.password)
           bcrypt.genSalt(10, function (err, salt) {
             bcrypt
               .hash(req.body.password, salt, function (error, hash) {
