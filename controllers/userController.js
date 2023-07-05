@@ -8,7 +8,6 @@ const { user: User } = prisma
 
 export default {
 signUpUser(req, res){
-  console.log(req.body)
     User.findUnique({ where: { email: req.body.email } })
       .then((result) => {
         if (result) {
@@ -50,7 +49,7 @@ signUpUser(req, res){
           error: error,
         })
       })
-},
+  },
 
 getAllUser(req, res){
     User.findMany()
