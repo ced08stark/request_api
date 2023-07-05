@@ -72,12 +72,12 @@ getAllUser(req, res){
 
 getUserById(req, res) {
     const id = req.params.id
-      User.findUnique({ where: { id: parseInt(id) } })
+      User.findUnique({ where: { id: parseInt(id) }})
         .then((data) => {
-          if (data.length > 0) {
+          if (data) {
             res.status(200).json(data)
           } else {
-            res.status(404).json({ message: 'not found data' })
+            res.status(404).json({ message: 'not user data' })
           }
         })
         .catch((error) => {
