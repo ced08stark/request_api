@@ -44,7 +44,7 @@ server.use('/upload', express.static('images'))
 //server.use('/', technicienRoute)
 //server.use('/', equipementRoute)
 
-server.listen(8000)
+server.listen(3001)
 
 export default server;
 
