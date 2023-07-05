@@ -26,7 +26,7 @@ signUpUser(req, res){
                   image: req.body.image,
                   role: req.body.role,
                 }
-                console.log(user)
+                
                 User.create({ data: user })
                   .then((result) => {
                     res.status(200).json({
