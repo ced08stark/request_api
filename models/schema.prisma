@@ -31,20 +31,15 @@ model User{
     phone String
     image String
     role String
-    equipements Equipement[]
-    intervention Intervention[]
+    equipementMateriels EquipementMateriel[]
+    equipementLogiciels EquipementLogiciel[]
+    interventionMateriels InterventionMateriel[]
+    interventionLogiciels InterventionLogiciel[]
     createdAt DateTime? @default(now())
     updateAt DateTime? @updatedAt
 }
 
-model Categorie{
-    id Int @id @default(autoincrement())
-    libelle String
-    image String
-    equipement Equipement?
-    createdAt DateTime? @default(now())
-    updateAt DateTime? @updatedAt
-}
+
 
 
 model Materiel{
@@ -53,7 +48,7 @@ model Materiel{
     marque String
     image String
     quantite Int
-    equipement Equipement?
+    equipement EquipementMateriel?
     createdAt DateTime? @default(now())
     updateAt DateTime? @updatedAt
 }
@@ -64,62 +59,89 @@ model Logiciel{
     version String
     image String
     licence Int
-    equipement Equipement?
+    equipement EquipementLogiciel?
     createdAt DateTime? @default(now())
     updateAt DateTime? @updatedAt
 }
 
-model Equipement{
+
+model EquipementLogiciel{
     id Int @id @default(autoincrement())
     logiciel Logiciel @relation(fields: [logicielId], references: [id])
     logicielId Int @unique
-    materiel Materiel @relation(fields: [materielId], references: [id])
-    materielId Int @unique
-    categorie Categorie @relation(fields: [categorieId], references: [id])
-    categorieId Int @unique
     user User @relation(fields: [userId], references: [id])
     userId Int @unique
-    intervention Intervention[]
+    status Boolean
+    interventionLogiciel InterventionLogiciel[]
+    createdAt DateTime? @default(now())
+    updateAt DateTime? @updatedAt
+}
+
+model EquipementMateriel{
+    id Int @id @default(autoincrement())
+    materiel Materiel @relation(fields: [materielId], references: [id])
+    materielId Int @unique
+    user User @relation(fields: [userId], references: [id])
+    userId Int @unique
+    status Boolean
+    interventionMateriel InterventionMateriel[]
     createdAt DateTime? @default(now())
     updateAt DateTime? @updatedAt
 }
 
 
 
-model Rapport{
+model RapportMateriel{
     id Int @id @default(autoincrement())
+    title String
     description String
-    technicien Technicien @relation(fields: [technicienId], references: [id])
-    technicienId Int
-    intervention Intervention @relation(fields: [interventionId], references: [id])
+    interventionMateriel InterventionMateriel @relation(fields: [interventionId], references: [id])
     interventionId Int
     createdAt DateTime? @default(now())
     updateAt DateTime? @updatedAt
 }
 
-model Intervention{
+model RapportLogiciel{
     id Int @id @default(autoincrement())
+    title String
     description String
-    typeDiagnostique String
-    isAssign Boolean @default(false)
-    user User @relation(fields: [userId], references: [id])
-    userId Int @unique
-    equipement Equipement @relation(fields: [equipementId], references: [id])
-    equipementId Int @unique
-    rapport Rapport[]
+    interventionLogiciel InterventionLogiciel @relation(fields: [interventionId], references: [id])
+    interventionId Int
     createdAt DateTime? @default(now())
     updateAt DateTime? @updatedAt
 }
 
-model Technicien{
+model InterventionMateriel{
     id Int @id @default(autoincrement())
-    nom String
-    email String
-    phone String
-    rapports Rapport[]
+    description String
+    typeDiagnostique String
+    isAssign Boolean @default(false)
+    isFrequency Boolean @default(false)
+    user User @relation(fields: [userId], references: [id])
+    userId Int @unique
+    equipementMateriel EquipementMateriel @relation(fields: [equipementId], references: [id])
+    equipementId Int @unique
+    rapportMateriel RapportMateriel[]
     createdAt DateTime? @default(now())
     updateAt DateTime? @updatedAt
 }
+
+model InterventionLogiciel{
+    id Int @id @default(autoincrement())
+    description String
+    typeDiagnostique String
+    isAssign Boolean @default(false)
+    isFrequency Boolean @default(false)
+    user User @relation(fields: [userId], references: [id])
+    userId Int @unique
+    equipementLogiciel EquipementLogiciel @relation(fields: [equipementId], references: [id])
+    equipementId Int @unique
+    rapportLogiciel RapportLogiciel[]
+    createdAt DateTime? @default(now())
+    updateAt DateTime? @updatedAt
+}
+
+
 
 
 

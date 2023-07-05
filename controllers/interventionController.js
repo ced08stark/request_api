@@ -3,15 +3,14 @@ import pkg from '@prisma/client'
 const { PrismaClient } = pkg
 const prisma = new PrismaClient()
 
-const { rapportLogiciel: RapportLogiciel } = prisma
-const { rapportMateriel: RapportMateriel } = prisma
-
+const { interventionLogiciel: InterventionLogiciel } = prisma
+const { interventionMateriel: InterventionMateriel } = prisma
 
 
 export default {
   //CRUD des equiments materiels
-  getAllRapportMateriels(req, res) {
-    RapportMateriel.findMany()
+  getAllInterventionMateriels(req, res) {
+    InterventionMateriel.findMany()
       .then((data) => {
         if (data.length>0) {
           res.status(200).json(data)
@@ -27,9 +26,10 @@ export default {
       })
   },
 
-  getRapportMaterielById(req, res) {
+  getInterventionMaterielById(req, res) {
     const id = req.params.id
-    RapportMateriel.findUnique({ where: { id: parseInt(id) } })
+    console.log(id)
+    InterventionMateriel.findUnique({ where: { id: parseInt(id) } })
       .then((data) => {
         if (data) {
           res.status(200).json(data)
@@ -45,16 +45,19 @@ export default {
       })
   },
 
-  addRapportMateriel(req, res) {
-    const rapport = {
-      title: req.body.title,
-      description: req.body.description,
-      interventionId: req.body.interventionId,
+  addInterventionMateriel(req, res) {
+    const intervention = {
+    description: req.body.description,
+    typeDiagnostique: req.body.typeDiagnostique,
+    isAssign: req.body.isAssign,
+    isFrequency: req.body.isFrequency,
+    userId: req.body.userId,
+    equipementId: req.body.equipementId,
     }
-    RapportMateriel.create({ data: rapport })
+    InterventionMateriel.create({ data: intervention })
       .then((result) => {
         res.status(200).json({
-          message: 'Rapport Materiel create success',
+          message: 'Intervention Materiel create success',
           result,
         })
       })
@@ -65,12 +68,12 @@ export default {
         })
       })
   },
-  deleteRapportMateriel(req, res) {
+  deleteInterventionMateriel(req, res) {
     const id = req.params.id
-    RapportMateriel.delete({ where: { id: parseInt(id) } })
+    InterventionMateriel.delete({ where: { id: parseInt(id) } })
       .then((result) => {
         res.status(201).json({
-          message: 'Rapport Materiel delete success',
+          message: 'Intervention Materiel delete success',
           result,
         })
       })
@@ -81,17 +84,22 @@ export default {
         })
       })
   },
-  updateRapportMateriel(req, res) {
+  updateInterventionMateriel(req, res) {
     const id = req.params.id
-    const rapport = {
-      title: req.body.title,
+    const intervention = {
       description: req.body.description,
-      interventionId: req.body.interventionId,
+      typeDiagnostique: req.body.typeDiagnostique,
+      isAssign: req.body.isAssign,
+      isFrequency: req.body.isFrequency,
+      userId: req.body.userId,
+      equipementId: req.body.equipementId,
+      createdAt: req.body.createdAt,
+      updateAt: req.body.updateAt,
     }
-    RapportMateriel.update({ data: rapport }, { where: { id: parseInt(id) } })
+    InterventionMateriel.updateMany({ data: intervention }, { where: { id: parseInt(id) } })
       .then((result) => {
         res.status(201).json({
-          message: 'Rapport Materiel update success',
+          message: 'Intervention Materiel update success',
           result,
         })
       })
@@ -104,8 +112,8 @@ export default {
   },
 
   //CRUD des equiments logiciels
-  getAllRapportLogiciels(req, res) {
-    RapportLogiciel.findMany()
+  getAllInterventionLogiciels(req, res) {
+    InterventionLogiciel.findMany()
       .then((data) => {
         if (data.length > 0) {
           res.status(200).json(data)
@@ -121,9 +129,10 @@ export default {
       })
   },
 
-  getRapportLogicielById(req, res) {
+  getInterventionLogicielById(req, res) {
     const id = req.params.id
-    RapportLogiciel.findUnique({ where: { id: parseInt(id) } })
+    console.log(id)
+    InterventionLogiciel.findUnique({ where: { id: parseInt(id) } })
       .then((data) => {
         if (data) {
           res.status(200).json(data)
@@ -139,16 +148,19 @@ export default {
       })
   },
 
-  addRapportLogiciel(req, res) {
-    const rapport = {
-      title: req.body.title,
-      description: req.body.description,
-      interventionId: req.body.interventionId,
+  addInterventionLogiciel(req, res) {
+    const intervention = {
+        description: req.body.description,
+        typeDiagnostique: req.body.typeDiagnostique,
+        isAssign: req.body.isAssign,
+        isFrequency: req.body.isFrequency,
+        userId: req.body.userId,
+        equipementId: req.body.equipementId,
     }
-    RapportLogiciel.create({ data: rapport })
+    InterventionLogiciel.create({ data: intervention })
       .then((result) => {
         res.status(200).json({
-          message: 'Rapport Logiciel create success',
+          message: 'Intervention Logiciel create success',
           result,
         })
       })
@@ -159,12 +171,12 @@ export default {
         })
       })
   },
-  deleteRapportLogiciel(req, res) {
+  deleteInterventionLogiciel(req, res) {
     const id = req.params.id
-    RapportLogiciel.delete({ where: { id: parseInt(id) } })
+    InterventionLogiciel.delete({ where: { id: parseInt(id) } })
       .then((result) => {
         res.status(201).json({
-          message: 'Rapport Logiciel delete success',
+          message: 'Intervention Logiciel delete success',
           result,
         })
       })
@@ -175,17 +187,22 @@ export default {
         })
       })
   },
-  updateRapportLogiciel(req, res) {
+  updateInterventionLogiciel(req, res) {
     const id = req.params.id
-    const rapport = {
-      title: req.body.title,
+    const intervention = {
       description: req.body.description,
-      interventionId: req.body.interventionId,
+      typeDiagnostique: req.body.typeDiagnostique,
+      isAssign: req.body.isAssign,
+      isFrequency: req.body.isFrequency,
+      userId: req.body.userId,
+      equipementId: req.body.equipementId,
+      createdAt: req.body.createdAt,
+      updateAt: req.body.updateAt,
     }
-    RapportLogiciel.update({ data: rapport }, { where: { id: parseInt(id) } })
+    InterventionLogiciel.updateMany({ data: intervention }, { where: { id: parseInt(id) } })
       .then((result) => {
         res.status(201).json({
-          message: 'Rapport logiciel update success',
+          message: 'Intervention logiciel update success',
           result,
         })
       })
