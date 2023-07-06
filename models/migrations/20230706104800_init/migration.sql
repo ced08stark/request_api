@@ -57,7 +57,7 @@ CREATE TABLE "EquipementLogiciel" (
     "id" SERIAL NOT NULL,
     "logicielId" INTEGER NOT NULL,
     "userId" INTEGER NOT NULL,
-    "status" BOOLEAN NOT NULL DEFAULT false,
+    "status" BOOLEAN NOT NULL,
     "createdAt" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
     "updateAt" TIMESTAMP(3),
 
@@ -69,7 +69,7 @@ CREATE TABLE "EquipementMateriel" (
     "id" SERIAL NOT NULL,
     "materielId" INTEGER NOT NULL,
     "userId" INTEGER NOT NULL,
-    "status" BOOLEAN NOT NULL DEFAULT false,
+    "status" BOOLEAN NOT NULL,
     "createdAt" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
     "updateAt" TIMESTAMP(3),
 
@@ -137,28 +137,10 @@ CREATE UNIQUE INDEX "Admin_email_key" ON "Admin"("email");
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "EquipementLogiciel_logicielId_key" ON "EquipementLogiciel"("logicielId");
-
--- CreateIndex
-CREATE UNIQUE INDEX "EquipementLogiciel_userId_key" ON "EquipementLogiciel"("userId");
-
--- CreateIndex
 CREATE UNIQUE INDEX "EquipementMateriel_materielId_key" ON "EquipementMateriel"("materielId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "EquipementMateriel_userId_key" ON "EquipementMateriel"("userId");
-
--- CreateIndex
-CREATE UNIQUE INDEX "InterventionMateriel_userId_key" ON "InterventionMateriel"("userId");
-
--- CreateIndex
-CREATE UNIQUE INDEX "InterventionMateriel_equipementId_key" ON "InterventionMateriel"("equipementId");
-
--- CreateIndex
-CREATE UNIQUE INDEX "InterventionLogiciel_userId_key" ON "InterventionLogiciel"("userId");
-
--- CreateIndex
-CREATE UNIQUE INDEX "InterventionLogiciel_equipementId_key" ON "InterventionLogiciel"("equipementId");
 
 -- AddForeignKey
 ALTER TABLE "EquipementLogiciel" ADD CONSTRAINT "EquipementLogiciel_logicielId_fkey" FOREIGN KEY ("logicielId") REFERENCES "Logiciel"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
