@@ -66,9 +66,11 @@ export default {
   },
 
   addEquipementMateriel(req, res) {
-    EquipementLogiciel.findUnique({ where: { materielId: req.body.materielId } && { userId: req.body.userId } })
+   console.log(req.body)
+    EquipementMateriel.findMany({ where: { AND: [{ materielId: req.body.materielId, userId: req.body.userId }] } })
       .then((result) => {
-        if (result) {
+         
+        if (result.length > 0) {
           res.status(409).json({
             message: 'this materiel equipment already Existe',
           })
@@ -76,6 +78,7 @@ export default {
           const equipement = {
             materielId: req.body.materielId,
             userId: req.body.userId,
+            status: false
           }
           EquipementMateriel.create({ data: equipement })
             .then((result) => {
