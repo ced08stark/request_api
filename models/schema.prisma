@@ -48,7 +48,7 @@ model Materiel{
     marque String
     image String
     quantite Int
-    equipement EquipementMateriel?
+    equipements EquipementMateriel[]
     createdAt DateTime? @default(now())
     updateAt DateTime? @updatedAt
 }
@@ -59,7 +59,7 @@ model Logiciel{
     version String
     image String
     licence Int
-    equipement EquipementLogiciel?
+    equipements EquipementLogiciel[]
     createdAt DateTime? @default(now())
     updateAt DateTime? @updatedAt
 }
@@ -68,9 +68,9 @@ model Logiciel{
 model EquipementLogiciel{
     id Int @id @default(autoincrement())
     logiciel Logiciel @relation(fields: [logicielId], references: [id])
-    logicielId Int @unique
+    logicielId Int 
     user User @relation(fields: [userId], references: [id])
-    userId Int @unique
+    userId Int 
     status Boolean
     interventionLogiciel InterventionLogiciel[]
     createdAt DateTime? @default(now())
@@ -118,9 +118,9 @@ model InterventionMateriel{
     isAssign Boolean @default(false)
     isFrequency Boolean @default(false)
     user User @relation(fields: [userId], references: [id])
-    userId Int @unique
+    userId Int 
     equipementMateriel EquipementMateriel @relation(fields: [equipementId], references: [id])
-    equipementId Int @unique
+    equipementId Int 
     rapportMateriel RapportMateriel[]
     createdAt DateTime? @default(now())
     updateAt DateTime? @updatedAt
@@ -133,9 +133,9 @@ model InterventionLogiciel{
     isAssign Boolean @default(false)
     isFrequency Boolean @default(false)
     user User @relation(fields: [userId], references: [id])
-    userId Int @unique
+    userId Int 
     equipementLogiciel EquipementLogiciel @relation(fields: [equipementId], references: [id])
-    equipementId Int @unique
+    equipementId Int 
     rapportLogiciel RapportLogiciel[]
     createdAt DateTime? @default(now())
     updateAt DateTime? @updatedAt

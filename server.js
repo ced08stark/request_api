@@ -40,7 +40,7 @@ server.use('/upload', express.static('images'))
 
 
 
-server.listen(3001)
+server.listen(8000)
 
 export default server;
 
