@@ -80,9 +80,9 @@ model EquipementLogiciel{
 model EquipementMateriel{
     id Int @id @default(autoincrement())
     materiel Materiel @relation(fields: [materielId], references: [id])
-    materielId Int @unique
+    materielId Int 
     user User @relation(fields: [userId], references: [id])
-    userId Int @unique
+    userId Int
     status Boolean
     interventionMateriel InterventionMateriel[]
     createdAt DateTime? @default(now())
