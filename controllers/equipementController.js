@@ -186,9 +186,9 @@ export default {
         for (const item of data) {
           const user = await User.findUnique({ where: { id: item.userId } })
           if (user) {
-            const materiels = await Materiel.findUnique({ where: { id: item.materielId } })
-            if (materiels) {
-              result.push({ user, materiels })
+            const materiel = await Materiel.findUnique({ where: { id: item.materielId } })
+            if (materiel) {
+              result.push({ user, materiel })
             }
           }
         }
@@ -213,9 +213,9 @@ export default {
         for (const item of data) {
           const user = await User.findUnique({ where: { id: item.userId } })
           if (user) {
-            const logiciels = await Logiciel.findUnique({ where: { id: item.logicielId } })
-            if (logiciels) {
-              result.push({ user, logiciels })
+            const logiciel = await Logiciel.findUnique({ where: { id: item.logicielId } })
+            if (logiciel) {
+              result.push({ user, logiciel })
             }
           }
         }
