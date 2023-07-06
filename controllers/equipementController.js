@@ -122,14 +122,12 @@ export default {
   updateEquipementMateriel(req, res) {
     const id = req.params.id
     const equipement = {
-      id: req.body.id,
-      materialId: req.body.materialId,
+      materielId: req.body.materielId,
       userId: req.body.userId,
-      status: req.body.status,
-      createdAt: req.body.createdAt,
-      updateAt: req.body.updateAt,
+      status: req.body.status
     }
-    EquipementMateriel.updateMany({ data: equipement }, { where: { id: parseInt(id) } })
+    console.log(equipement)
+    EquipementMateriel.update({ where: { id: parseInt(id) }, data: equipement })
       .then((result) => {
         res.status(201).json({
           message: 'Equipement Materiel update success',
@@ -322,7 +320,7 @@ export default {
       createdAt: req.body.createdAt,
       updateAt: req.body.updateAt,
     }
-    EquipementLogiciel.updateMany({ data: equipement }, { where: { id: parseInt(id) } })
+    EquipementLogiciel.update({ where: { id: parseInt(id) }, data: equipement })
       .then((result) => {
         res.status(201).json({
           message: 'Equipement logiciel update success',
