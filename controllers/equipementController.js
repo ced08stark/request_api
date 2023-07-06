@@ -200,6 +200,7 @@ export default {
       })
     }
   },
+  ///
   async getAllEquipementLogiciels1(req, res) {
     try {
       const result = []
