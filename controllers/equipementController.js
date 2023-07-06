@@ -28,22 +28,34 @@ export default {
         })
       })
   },
-  getAllEquipementMateriels(req, res) {
+  async getAllEquipementMateriels(req, res) {
     const userId = req.body.userId
-    EquipementMateriel.findMany({ where: { userId: parseInt(userId) } })
-      .then((data) => {
-        if (data.length > 0) {
-          res.status(200).json(data)
-        } else {
-          res.status(404).json({ message: 'not found data' })
+    try {
+      const result = []
+      const data = await EquipementMateriel.findMany({ where: { userId: parseInt(userId) } })
+      if (data.length > 0) {
+        for (const item of data) {
+          const date = item.createdAt
+          const status = item.status
+          const id = item.id
+          const user = await User.findUnique({ where: { id: item.userId } })
+          if (user) {
+            const materiel = await Materiel.findUnique({ where: { id: item.materielId } })
+            if (materiel) {
+              result.push({ id, user, materiel, status, date })
+            }
+          }
         }
+        res.status(200).json(result)
+      } else {
+        res.status(404).json({ message: 'not found data' })
+      }
+    } catch (error) {
+      res.status(500).json({
+        message: 'Somthing went Wrong',
+        error: error,
       })
-      .catch((error) => {
-        res.status(500).json({
-          message: 'Somthing went Wrong',
-          error: error,
-        })
-      })
+    }
   },
 
   getEquipementMaterielById(req, res) {
@@ -66,10 +78,9 @@ export default {
   },
 
   addEquipementMateriel(req, res) {
-   console.log(req.body)
+    console.log(req.body)
     EquipementMateriel.findMany({ where: { AND: [{ materielId: req.body.materielId, userId: req.body.userId }] } })
       .then((result) => {
-         
         if (result.length > 0) {
           res.status(409).json({
             message: 'this materiel equipment already Existe',
@@ -78,7 +89,7 @@ export default {
           const equipement = {
             materielId: req.body.materielId,
             userId: req.body.userId,
-            status: false
+            status: false,
           }
           EquipementMateriel.create({ data: equipement })
             .then((result) => {
@@ -124,7 +135,7 @@ export default {
     const equipement = {
       materielId: req.body.materielId,
       userId: req.body.userId,
-      status: req.body.status
+      status: req.body.status,
     }
     console.log(equipement)
     EquipementMateriel.update({ where: { id: parseInt(id) }, data: equipement })
@@ -159,22 +170,34 @@ export default {
         })
       })
   },
-  getAllEquipementLogiciels(req, res) {
+  async getAllEquipementLogiciels(req, res) {
     const userId = req.body.userId
-    EquipementLogiciel.findMany({ where: { userId: parseInt(userId) } })
-      .then((data) => {
-        if (data.length > 0) {
-          res.status(200).json(data)
-        } else {
-          res.status(404).json({ message: 'not found data' })
+    try {
+      const result = []
+      const data = await EquipementLogiciel.findMany({ where: { userId: parseInt(userId) } })
+      if (data.length > 0) {
+        for (const item of data) {
+          const date = item.createdAt
+          const status = item.status
+          const id = item.id
+          const user = await User.findUnique({ where: { id: item.userId } })
+          if (user) {
+            const logiciel = await Logiciel.findUnique({ where: { id: item.logicielId } })
+            if (logiciel) {
+              result.push({ id, user, logiciel, status, date })
+            }
+          }
         }
+        res.status(200).json(result)
+      } else {
+        res.status(404).json({ message: 'not found data' })
+      }
+    } catch (error) {
+      res.status(500).json({
+        message: 'Somthing went Wrong',
+        error: error,
       })
-      .catch((error) => {
-        res.status(500).json({
-          message: 'Somthing went Wrong',
-          error: error,
-        })
-      })
+    }
   },
   async getAllEquipementMateriels2(req, res) {
     try {
@@ -182,7 +205,7 @@ export default {
       const data = await EquipementMateriel.findMany({ where: { status: false } })
       if (data.length > 0) {
         for (const item of data) {
-          const date=item.createdAt
+          const date = item.createdAt
           const status = item.status
           const id = item.id
           const user = await User.findUnique({ where: { id: item.userId } })
@@ -206,12 +229,11 @@ export default {
   },
   ///
   async getAllEquipementLogiciels1(req, res) {
-    console.log("get All equipement status false")
+    console.log('get All equipement status false')
     try {
       const result = []
       const data = await EquipementLogiciel.findMany({ where: { status: false } })
       if (data.length > 0) {
-        
         for (const item of data) {
           const date = item.createdAt
           const status = item.status
