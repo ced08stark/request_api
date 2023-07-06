@@ -184,11 +184,14 @@ export default {
       const data = await EquipementMateriel.findMany({ where: { status: false } })
       if (data.length > 0) {
         for (const item of data) {
+          const date=item.createdAt
+          const status = item.status
+          const id = item.id
           const user = await User.findUnique({ where: { id: item.userId } })
           if (user) {
             const materiel = await Materiel.findUnique({ where: { id: item.materielId } })
             if (materiel) {
-              result.push({ user, materiel })
+              result.push({ id, user, materiel, status, date })
             }
           }
         }
@@ -210,12 +213,15 @@ export default {
       const result = []
       const data = await EquipementLogiciel.findMany({ where: { status: false } })
       if (data.length > 0) {
+        const date = item.createdAt
+        const status = item.status
+        const id = item.id
         for (const item of data) {
           const user = await User.findUnique({ where: { id: item.userId } })
           if (user) {
             const logiciel = await Logiciel.findUnique({ where: { id: item.logicielId } })
             if (logiciel) {
-              result.push({ user, logiciel })
+              result.push({ id, user, logiciel, status, date })
             }
           }
         }
