@@ -213,10 +213,11 @@ export default {
       const result = []
       const data = await EquipementLogiciel.findMany({ where: { status: false } })
       if (data.length > 0) {
-        const date = item.createdAt
-        const status = item.status
-        const id = item.id
+        
         for (const item of data) {
+          const date = item.createdAt
+          const status = item.status
+          const id = item.id
           const user = await User.findUnique({ where: { id: item.userId } })
           if (user) {
             const logiciel = await Logiciel.findUnique({ where: { id: item.logicielId } })
