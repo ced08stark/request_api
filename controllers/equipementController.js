@@ -202,6 +202,7 @@ export default {
   },
   ///
   async getAllEquipementLogiciels1(req, res) {
+    console.log("get All equipement status false")
     try {
       const result = []
       const data = await EquipementLogiciel.findMany({ where: { status: false } })
