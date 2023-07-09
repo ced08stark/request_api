@@ -131,7 +131,7 @@ model InterventionLogiciel{
     description String
     typeDiagnostique String
     isAssign Boolean @default(false)
-    isFrequency Boolean @default(false)
+    isBegin Boolean @default(false)
     user User @relation(fields: [userId], references: [id])
     userId Int 
     equipementLogiciel EquipementLogiciel @relation(fields: [equipementLogicielId], references: [id])

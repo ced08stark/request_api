@@ -44,7 +44,6 @@ export default {
         })
       })
   },
-
   addInterventionMateriel(req, res) {
     const intervention = {
       description: req.body.description,
