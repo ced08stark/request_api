@@ -115,8 +115,8 @@ model InterventionMateriel{
     id Int @id @default(autoincrement())
     description String
     typeDiagnostique String
-    isAssign Boolean @default(false)
-    isFrequency Boolean @default(false)
+    isAssign Boolean
+    isFrequency Boolean
     user User @relation(fields: [userId], references: [id])
     userId Int 
     equipementMateriel EquipementMateriel @relation(fields: [equipementMaterielId], references: [id])
@@ -130,8 +130,8 @@ model InterventionLogiciel{
     id Int @id @default(autoincrement())
     description String
     typeDiagnostique String
-    isAssign Boolean @default(false)
-    isBegin Boolean @default(false)
+    isAssign Boolean
+    isBegin Boolean
     user User @relation(fields: [userId], references: [id])
     userId Int 
     equipementLogiciel EquipementLogiciel @relation(fields: [equipementLogicielId], references: [id])
