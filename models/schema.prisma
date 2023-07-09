@@ -95,8 +95,8 @@ model RapportMateriel{
     id Int @id @default(autoincrement())
     title String
     description String
-    interventionMateriel InterventionMateriel @relation(fields: [interventionId], references: [id])
-    interventionId Int
+    interventionMateriel InterventionMateriel @relation(fields: [interventionMaterielId], references: [id])
+    interventionMaterielId Int
     createdAt DateTime? @default(now())
     updateAt DateTime? @updatedAt
 }
@@ -105,8 +105,8 @@ model RapportLogiciel{
     id Int @id @default(autoincrement())
     title String
     description String
-    interventionLogiciel InterventionLogiciel @relation(fields: [interventionId], references: [id])
-    interventionId Int
+    interventionLogiciel InterventionLogiciel @relation(fields: [interventionLogicielId], references: [id])
+    interventionLogicielId Int
     createdAt DateTime? @default(now())
     updateAt DateTime? @updatedAt
 }

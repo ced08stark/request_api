@@ -81,7 +81,7 @@ CREATE TABLE "RapportMateriel" (
     "id" SERIAL NOT NULL,
     "title" TEXT NOT NULL,
     "description" TEXT NOT NULL,
-    "interventionId" INTEGER NOT NULL,
+    "interventionMaterielId" INTEGER NOT NULL,
     "createdAt" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
     "updateAt" TIMESTAMP(3),
 
@@ -93,7 +93,7 @@ CREATE TABLE "RapportLogiciel" (
     "id" SERIAL NOT NULL,
     "title" TEXT NOT NULL,
     "description" TEXT NOT NULL,
-    "interventionId" INTEGER NOT NULL,
+    "interventionLogicielId" INTEGER NOT NULL,
     "createdAt" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
     "updateAt" TIMESTAMP(3),
 
@@ -149,10 +149,10 @@ ALTER TABLE "EquipementMateriel" ADD CONSTRAINT "EquipementMateriel_materielId_f
 ALTER TABLE "EquipementMateriel" ADD CONSTRAINT "EquipementMateriel_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "RapportMateriel" ADD CONSTRAINT "RapportMateriel_interventionId_fkey" FOREIGN KEY ("interventionId") REFERENCES "InterventionMateriel"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "RapportMateriel" ADD CONSTRAINT "RapportMateriel_interventionMaterielId_fkey" FOREIGN KEY ("interventionMaterielId") REFERENCES "InterventionMateriel"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "RapportLogiciel" ADD CONSTRAINT "RapportLogiciel_interventionId_fkey" FOREIGN KEY ("interventionId") REFERENCES "InterventionLogiciel"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "RapportLogiciel" ADD CONSTRAINT "RapportLogiciel_interventionLogicielId_fkey" FOREIGN KEY ("interventionLogicielId") REFERENCES "InterventionLogiciel"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "InterventionMateriel" ADD CONSTRAINT "InterventionMateriel_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
