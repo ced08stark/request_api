@@ -54,7 +54,7 @@ export default {
       userId: req.body.userId,
       equipementMaterielId: req.body.equipementId
     }
-    console.log(intervention)
+    //console.log(intervention)
     InterventionMateriel.create({ data: intervention })
       .then((result) => {
         res.status(200).json({
