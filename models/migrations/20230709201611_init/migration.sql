@@ -108,7 +108,7 @@ CREATE TABLE "InterventionMateriel" (
     "isAssign" BOOLEAN NOT NULL DEFAULT false,
     "isFrequency" BOOLEAN NOT NULL DEFAULT false,
     "userId" INTEGER NOT NULL,
-    "equipementId" INTEGER NOT NULL,
+    "equipementMaterielId" INTEGER NOT NULL,
     "createdAt" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
     "updateAt" TIMESTAMP(3),
 
@@ -123,7 +123,7 @@ CREATE TABLE "InterventionLogiciel" (
     "isAssign" BOOLEAN NOT NULL DEFAULT false,
     "isFrequency" BOOLEAN NOT NULL DEFAULT false,
     "userId" INTEGER NOT NULL,
-    "equipementId" INTEGER NOT NULL,
+    "equipementLogicielId" INTEGER NOT NULL,
     "createdAt" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
     "updateAt" TIMESTAMP(3),
 
@@ -135,12 +135,6 @@ CREATE UNIQUE INDEX "Admin_email_key" ON "Admin"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
-
--- CreateIndex
-CREATE UNIQUE INDEX "EquipementMateriel_materielId_key" ON "EquipementMateriel"("materielId");
-
--- CreateIndex
-CREATE UNIQUE INDEX "EquipementMateriel_userId_key" ON "EquipementMateriel"("userId");
 
 -- AddForeignKey
 ALTER TABLE "EquipementLogiciel" ADD CONSTRAINT "EquipementLogiciel_logicielId_fkey" FOREIGN KEY ("logicielId") REFERENCES "Logiciel"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -164,10 +158,10 @@ ALTER TABLE "RapportLogiciel" ADD CONSTRAINT "RapportLogiciel_interventionId_fke
 ALTER TABLE "InterventionMateriel" ADD CONSTRAINT "InterventionMateriel_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "InterventionMateriel" ADD CONSTRAINT "InterventionMateriel_equipementId_fkey" FOREIGN KEY ("equipementId") REFERENCES "EquipementMateriel"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "InterventionMateriel" ADD CONSTRAINT "InterventionMateriel_equipementMaterielId_fkey" FOREIGN KEY ("equipementMaterielId") REFERENCES "EquipementMateriel"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "InterventionLogiciel" ADD CONSTRAINT "InterventionLogiciel_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "InterventionLogiciel" ADD CONSTRAINT "InterventionLogiciel_equipementId_fkey" FOREIGN KEY ("equipementId") REFERENCES "EquipementLogiciel"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "InterventionLogiciel" ADD CONSTRAINT "InterventionLogiciel_equipementLogicielId_fkey" FOREIGN KEY ("equipementLogicielId") REFERENCES "EquipementLogiciel"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
