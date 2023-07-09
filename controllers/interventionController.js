@@ -52,9 +52,9 @@ export default {
       isAssign: req.body.isAssign,
       isFrequency: req.body.isFrequency,
       userId: req.body.userId,
-      equipementMaterielId: req.body.equipementId
+      equipementMaterielId: req.body.equipementId,
     }
-    //console.log(intervention)
+    console.log(intervention)
     InterventionMateriel.create({ data: intervention })
       .then((result) => {
         res.status(200).json({
@@ -156,7 +156,7 @@ export default {
       isAssign: req.body.isAssign,
       isFrequency: req.body.isFrequency,
       userId: req.body.userId,
-      equipementLogicielId: req.body.equipementId
+      equipementLogicielId: req.body.equipementId,
     }
     InterventionLogiciel.create({ data: intervention })
       .then((result) => {
