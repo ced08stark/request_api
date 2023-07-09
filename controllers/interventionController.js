@@ -47,13 +47,14 @@ export default {
 
   addInterventionMateriel(req, res) {
     const intervention = {
-    description: req.body.description,
-    typeDiagnostique: req.body.typeDiagnostique,
-    isAssign: req.body.isAssign,
-    isFrequency: req.body.isFrequency,
-    userId: req.body.userId,
-    equipementId: req.body.equipementId,
+      description: req.body.description,
+      typeDiagnostique: req.body.typeDiagnostique,
+      isAssign: req.body.isAssign,
+      isFrequency: req.body.isFrequency,
+      userId: req.body.userId,
+      equipementMaterielId: req.body.equipementId
     }
+    console.log(intervention)
     InterventionMateriel.create({ data: intervention })
       .then((result) => {
         res.status(200).json({
@@ -150,12 +151,12 @@ export default {
 
   addInterventionLogiciel(req, res) {
     const intervention = {
-        description: req.body.description,
-        typeDiagnostique: req.body.typeDiagnostique,
-        isAssign: req.body.isAssign,
-        isFrequency: req.body.isFrequency,
-        userId: req.body.userId,
-        equipementId: req.body.equipementId,
+      description: req.body.description,
+      typeDiagnostique: req.body.typeDiagnostique,
+      isAssign: req.body.isAssign,
+      isFrequency: req.body.isFrequency,
+      userId: req.body.userId,
+      equipementLogicielId: req.body.equipementId
     }
     InterventionLogiciel.create({ data: intervention })
       .then((result) => {

@@ -119,8 +119,8 @@ model InterventionMateriel{
     isFrequency Boolean @default(false)
     user User @relation(fields: [userId], references: [id])
     userId Int 
-    equipementMateriel EquipementMateriel @relation(fields: [equipementId], references: [id])
-    equipementId Int 
+    equipementMateriel EquipementMateriel @relation(fields: [equipementMaterielId], references: [id])
+    equipementMaterielId Int 
     rapportMateriel RapportMateriel[]
     createdAt DateTime? @default(now())
     updateAt DateTime? @updatedAt
@@ -134,8 +134,8 @@ model InterventionLogiciel{
     isFrequency Boolean @default(false)
     user User @relation(fields: [userId], references: [id])
     userId Int 
-    equipementLogiciel EquipementLogiciel @relation(fields: [equipementId], references: [id])
-    equipementId Int 
+    equipementLogiciel EquipementLogiciel @relation(fields: [equipementLogicielId], references: [id])
+    equipementLogicielId Int 
     rapportLogiciel RapportLogiciel[]
     createdAt DateTime? @default(now())
     updateAt DateTime? @updatedAt
