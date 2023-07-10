@@ -5,26 +5,73 @@ const prisma = new PrismaClient()
 
 const { interventionLogiciel: InterventionLogiciel } = prisma
 const { interventionMateriel: InterventionMateriel } = prisma
-
+const { equipementLogiciel: EquipementLogiciel } = prisma
+const { equipementMateriel: EquipementMateriel } = prisma
+const { materiel: Materiel } = prisma
+const { logiciel: Logiciel } = prisma
+const { user: User } = prisma
 
 export default {
   //CRUD des equiments materiels
-  getAllInterventionMateriels(req, res) {
-    InterventionMateriel.findMany()
-      .then((data) => {
-        if (data.length>0) {
-          res.status(200).json(data)
-        } else {
-          res.status(404).json({ message: 'not found data' })
-        }
-      })
-      .catch((error) => {
+  async getAllInterventionMaterielsData(req, res) {
+      try {
+        const result = []
+        const dataI = await InterventionMateriel.findMany();
+        console.log(dataI)
+           if (dataI.length > 0) {
+            for (const item of dataI) {
+                const id = item.id
+                const idEquipement = item.equipementMaterielId
+                const idUser = item.userId
+                const typeDiagnostique = item.typeDiagnostique
+                const desctiption = item.description
+                const isBegin = item.isBegin
+                const createTicketDate = item.createdAt
+                const equipement = await EquipementMateriel.findUnique({ where: { id: parseInt(idEquipement) } })
+                const user = await User.findUnique({ where: { id: idUser } })
+                if (equipement && user) {
+                  const materiel = await Materiel.findUnique({ where: { id: equipement.materielId } })
+                  if (materiel) {
+                    result.push({
+                      id,
+                      typeDiagnostique,
+                      desctiption,
+                      isBegin,
+                      createTicketDate,
+                      equipement,
+                      materiel,
+                      user,
+                    })
+                  }
+                //   res.status(200).json(result)
+                // } else {
+                //   res.status(404).json({ message: 'not found data' })
+                }
+            }
+             res.status(200).json(result) 
+           } else {
+             res.status(404).json({ message: 'not found data' })
+           }
+         }
+      catch (error) {
         res.status(500).json({
           message: 'Somthing went Wrong',
           error: error,
         })
-      })
+      }
+
   },
+      
+  //   InterventionMateriel.findMany()
+  //     .then((data) => {
+  //       if (data.length > 0) {
+  //         res.status(200).json(data)
+  //       } else {
+  //         res.status(404).json({ message: 'not found data' })
+  //       }
+  //     })
+      
+  // },
 
   getInterventionMaterielById(req, res) {
     const id = req.params.id
@@ -116,6 +163,24 @@ export default {
     InterventionLogiciel.findMany()
       .then((data) => {
         if (data.length > 0) {
+          res.status(200).json(data)
+        } else {
+          res.status(404).json({ message: 'not found data' })
+        }
+      })
+      .catch((error) => {
+        res.status(500).json({
+          message: 'Somthing went Wrong',
+          error: error,
+        })
+      })
+  },
+
+  getAllInterventionLogicielsData(req, res) {
+    InterventionLogiciel.findMany()
+      .then((data) => {
+        if (data.length > 0) {
+
           res.status(200).json(data)
         } else {
           res.status(404).json({ message: 'not found data' })

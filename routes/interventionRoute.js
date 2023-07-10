@@ -3,7 +3,7 @@ import express from 'express'
 
 const router = express.Router()
 
-router.get('/interventions/materiels', interventionController.getAllInterventionMateriels)
+router.get('/interventions/materiels', interventionController.getAllInterventionMaterielsData)
 router.get('/interventions/logiciels', interventionController.getAllInterventionLogiciels)
 router.get('/interventions/materiels/:id', interventionController.getInterventionMaterielById)
 router.get('/interventions/logiciels/:id', interventionController.getInterventionLogicielById)
