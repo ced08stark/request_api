@@ -25,7 +25,6 @@ export default {
                   password: hash,
                   username: req.body.username,
                   image: req.file.filename,
-                  
                 }
                 console.log(user)
                 Admin.create({data: user})

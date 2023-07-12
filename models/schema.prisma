@@ -11,8 +11,6 @@ datasource db {
 }
 
 
-
-
 model Admin{
     id Int @id @default(autoincrement())
     username String
@@ -23,123 +21,56 @@ model Admin{
     updateAt DateTime? @updatedAt
 }
 
-model User{
-    id Int @id @default(autoincrement())
-    username String
-    email String @unique
-    password String
-    phone String
-    image String
-    role String
-    equipementMateriels EquipementMateriel[]
-    equipementLogiciels EquipementLogiciel[]
-    interventionMateriels InterventionMateriel[]
-    interventionLogiciels InterventionLogiciel[]
-    createdAt DateTime? @default(now())
-    updateAt DateTime? @updatedAt
+model User {
+  id        Int       @id @default(autoincrement())
+  username  String
+  email     String    @unique
+  password  String
+  phone     String
+  image     String?
+  role      String
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
+  requestsSent   Request[] @relation("Sender")
+  requestsReceived Request[] @relation("Receiver")
+}
+
+model Request {
+  id          Int       @id @default(autoincrement())
+  object      String
+  content     String
+  senderId    Int
+  receiverId  Int
+  status      String
+  isFavorite  Boolean
+  isView      Boolean
+  sender      User      @relation("Sender", fields: [senderId], references: [id])
+  receiver    User      @relation("Receiver", fields: [receiverId], references: [id])
+  createdAt   DateTime? @default(now())
+  updatedAt   DateTime? @updatedAt
+  media       Media[]
+
+  @@index([senderId], name: "idx_request_sender_id")
+  @@index([receiverId], name: "idx_request_receiver_id")
+}
+
+model Media {
+  id                Int       @id @default(autoincrement())
+  url               String
+  requestId         Int?
+  request           Request?   @relation(fields: [requestId], references: [id])
 }
 
 
 
 
-model Materiel{
-    id Int @id @default(autoincrement())
-    nom String
-    marque String
-    image String
-    quantite Int
-    equipements EquipementMateriel[]
-    createdAt DateTime? @default(now())
-    updateAt DateTime? @updatedAt
-}
-
-model Logiciel{
-    id Int @id @default(autoincrement())
-    nom String
-    version String
-    image String
-    licence Int
-    equipements EquipementLogiciel[]
-    createdAt DateTime? @default(now())
-    updateAt DateTime? @updatedAt
-}
-
-
-model EquipementLogiciel{
-    id Int @id @default(autoincrement())
-    logiciel Logiciel @relation(fields: [logicielId], references: [id])
-    logicielId Int 
-    user User @relation(fields: [userId], references: [id])
-    userId Int 
-    status Boolean
-    interventionLogiciel InterventionLogiciel[]
-    createdAt DateTime? @default(now())
-    updateAt DateTime? @updatedAt
-}
-
-model EquipementMateriel{
-    id Int @id @default(autoincrement())
-    materiel Materiel @relation(fields: [materielId], references: [id])
-    materielId Int 
-    user User @relation(fields: [userId], references: [id])
-    userId Int
-    status Boolean
-    interventionMateriel InterventionMateriel[]
-    createdAt DateTime? @default(now())
-    updateAt DateTime? @updatedAt
-}
 
 
 
-model RapportMateriel{
-    id Int @id @default(autoincrement())
-    title String
-    description String
-    interventionMateriel InterventionMateriel @relation(fields: [interventionMaterielId], references: [id])
-    interventionMaterielId Int
-    createdAt DateTime? @default(now())
-    updateAt DateTime? @updatedAt
-}
 
-model RapportLogiciel{
-    id Int @id @default(autoincrement())
-    title String
-    description String
-    interventionLogiciel InterventionLogiciel @relation(fields: [interventionLogicielId], references: [id])
-    interventionLogicielId Int
-    createdAt DateTime? @default(now())
-    updateAt DateTime? @updatedAt
-}
 
-model InterventionMateriel{
-    id Int @id @default(autoincrement())
-    description String
-    typeDiagnostique String
-    isAssign Boolean
-    isBegin Boolean
-    user User @relation(fields: [userId], references: [id])
-    userId Int 
-    equipementMateriel EquipementMateriel @relation(fields: [equipementMaterielId], references: [id])
-    equipementMaterielId Int 
-    rapportMateriel RapportMateriel[]
-    createdAt DateTime? @default(now())
-    updateAt DateTime? @updatedAt
-}
 
-model InterventionLogiciel{
-    id Int @id @default(autoincrement())
-    description String
-    typeDiagnostique String
-    isAssign Boolean
-    isBegin Boolean
-    user User @relation(fields: [userId], references: [id])
-    userId Int 
-    equipementLogiciel EquipementLogiciel @relation(fields: [equipementLogicielId], references: [id])
-    equipementLogicielId Int 
-    rapportLogiciel RapportLogiciel[]
-    createdAt DateTime? @default(now())
-    updateAt DateTime? @updatedAt
-}
+
 
 
 

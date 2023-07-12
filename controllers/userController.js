@@ -5,6 +5,8 @@ const { PrismaClient } = pkg
 const prisma = new PrismaClient()
 
 const { user: User } = prisma
+const { media: Media } = prisma
+const { request: Request } = prisma
 
 export default {
 signUpUser(req, res){
@@ -23,7 +25,7 @@ signUpUser(req, res){
                   password: hash,
                   username: req.body.username,
                   phone: req.body.phone,
-                  image: req.body.image,
+                  image: null,
                   role: req.body.role,
                 }
                 
@@ -52,40 +54,83 @@ signUpUser(req, res){
       })
   },
 
-getAllUser(req, res){
-    User.findMany()
-      .then((data) =>{ 
+async getAllUser(req, res){
+  try {
+      let results = []
+      const data = await User.findMany()
       if (data.length > 0) {
-        res.status(200).json(data)
+        for (const item of data) {
+          const id = item.id
+          const requestsSends = await Request.findMany({ where: { senderId: parseInt(id) } })
+          const requestsReceives = await Request.findMany({ where: { receiverId: parseInt(id) } })
+          let requestsSend = []
+          let requestsReceive = []
+          if (requestsSends.length>0) {
+              for (const item of requestsSends) {
+                const id = item.id
+                const medias = await Media.findMany({ where: { requestId: parseInt(id) } })
+                requestsSend.push({ request: item, medias })
+              }
+          }
+          if (requestsReceives.length > 0) {
+            for (const item of requestsReceives) {
+              const id = item.id
+              const medias = await Media.findMany({ where: { requestId: parseInt(id) } })
+              requestsReceive.push({request: item, medias })
+            }
+          }
+          results.push({user: item, requestsSend, requestsReceive})
+        }
+        res.status(200).json({count: results.length , users: results})
       } else {
         res.status(404).json({ message: 'not found data' })
       }
-      }
-      )
-      .catch((error) => {
-        res.status(500).json({
-          message: "Somthing went Wrong",
-          error: error,
-        });
-      });
+    } catch (error) {
+      res.status(500).json({
+        message: 'Somthing went Wrong',
+        error: error,
+      })
+    }
 },
 
-getUserById(req, res) {
+async getUserById(req, res) {
+  try {
+    let results = []
     const id = req.params.id
-      User.findUnique({ where: { id: parseInt(id) }})
-        .then((data) => {
-          if (data) {
-            res.status(200).json(data)
-          } else {
-            res.status(404).json({ message: 'not user data' })
+    const data = await User.findUnique({where: {id: parseInt(id)}})
+    if (data) {
+      console.log(data)
+        const id = data.id
+        const requestsSends = await Request.findMany({ where: { senderId: parseInt(id) } })
+        const requestsReceives = await Request.findMany({ where: { receiverId: parseInt(id) } })
+        let requestsSend = []
+        let requestsReceive = []
+        if (requestsSends.length > 0) {
+          for (const item of requestsSends) {
+            const id = item.id
+            const medias = await Media.findMany({ where: { requestId: parseInt(id) } })
+            requestsSend.push({ request: item, medias })
           }
-        })
-        .catch((error) => {
-          res.status(500).json({
-            message: 'Somthing went Wrong',
-            error: error,
-          })
-        })
+        }
+        if (requestsReceives.length > 0) {
+          for (const item of requestsReceives) {
+            const id = item.id
+            const medias = await Media.findMany({ where: { requestId: parseInt(id) } })
+            requestsReceive.push({ request: item, medias })
+          }
+        }
+        results.push({ user: data, requestsSend, requestsReceive })
+      
+        res.status(200).json(results)
+    } else {
+      res.status(404).json({ message: 'not found data' })
+    }
+  } catch (error) {
+    res.status(500).json({
+      message: 'Somthing went Wrong',
+      error: error,
+    })
+  }
 },
 login(req, res){
     User.findUnique({ where: { email: req.body.email } })
@@ -106,7 +151,7 @@ login(req, res){
                 'secret',
                 function (error, token) {
                   res.status(200).json({
-                    message: ' Authentication successful',
+                    message: 'Authentication successful',
                     user: user,
                     token: token,
                   })
