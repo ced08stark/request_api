@@ -7,7 +7,7 @@ const router = express.Router()
 
 router.get('/requests', requestController.getAllRequest)
 router.get('/requests/:id', requestController.getRequestById)
-router.post('/request', uploadFiles, requestController.addRequest)
+router.post('/request', /*uploadFiles,*/ requestController.addRequest)
 router.patch('/requests/:id', requestController.updateRequest)
 router.delete('/requests/:id', requestController.deleteRequest)
 

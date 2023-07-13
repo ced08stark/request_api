@@ -12,7 +12,7 @@ const storage = multer.diskStorage({
 
     const fileType = getFileType(file)
     const destinationPath = path.join(uploadPath, fileType)
-    
+    console.log(destinationPath)
     if (!fs.existsSync(destinationPath)) {
       fs.mkdirSync(destinationPath)
     }
