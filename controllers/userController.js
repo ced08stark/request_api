@@ -116,6 +116,7 @@ async getUserById(req, res) {
         let requestsReceive = []
         if (requestsSends.length > 0) {
           for (const item of requestsSends) {
+            const id = item.id
             const idSender = item.senderId
             const idReceiver = item.receiverId
             const sender = await User.findUnique({ where: { id: parseInt(idSender) } })
@@ -126,6 +127,7 @@ async getUserById(req, res) {
         }
         if (requestsReceives.length > 0) {
           for (const item of requestsReceives) {
+            const id = item.id
             const idSender = item.senderId
             const idReceiver = item.receiverId
             const sender = await User.findUnique({ where: { id: parseInt(idSender) } })
