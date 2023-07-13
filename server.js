@@ -29,6 +29,9 @@ server.use("/api", userRoute)
 server.use("/api", adminRoute)
 server.use('/api', requestRoute)
 server.use('/api', mediaRoute)
+server.use('/uploads/pdf', express.static('uploads/pdf'))
+server.use('/uploads/images', express.static('uploads/images'))
+server.use('/upload/autre', express.static('uploads/autres'))
 
 // router.post('/uploadImage', uploadImage.single('image'), (req, res) => {
 //   if (!req.file) {
