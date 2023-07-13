@@ -16,7 +16,7 @@ export default {
       if (data.length > 0) {
         for (const item of data) {
           const id = item.id
-          
+
           const medias = await Media.findMany({ where: { id: parseInt(id) } })
           if (medias.length > 0) {
             results.push({ item, medias })
@@ -76,6 +76,7 @@ export default {
     }
     try {
       const data = await Request.create({ data: request })
+      console.log(data)
       if (data) {
         if (files.length > 0) {
           for (const item of files) {
