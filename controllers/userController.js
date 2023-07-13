@@ -57,6 +57,7 @@ signUpUser(req, res){
 async getAllUser(req, res){
   try {
       let results = []
+
       const data = await User.findMany()
       if (data.length > 0) {
         for (const item of data) {
@@ -68,15 +69,23 @@ async getAllUser(req, res){
           if (requestsSends.length>0) {
               for (const item of requestsSends) {
                 const id = item.id
+                const idSender = item.senderId
+                const idReceiver = item.receiverId
+                const sender = await User.findUnique({ where: { id: parseInt(idSender) } })
+                const receiver = await User.findUnique({ where: { id: parseInt(idReceiver) } })
                 const medias = await Media.findMany({ where: { requestId: parseInt(id) } })
-                requestsSend.push({ request: item, medias })
+                requestsSend.push({ request: item, sender, receiver, medias })
               }
           }
           if (requestsReceives.length > 0) {
             for (const item of requestsReceives) {
               const id = item.id
+              const idSender = item.senderId
+              const idReceiver = item.receiverId
+              const sender = await User.findUnique({ where: { id: parseInt(idSender) } })
+              const receiver = await User.findUnique({ where: { id: parseInt(idReceiver) } })
               const medias = await Media.findMany({ where: { requestId: parseInt(id) } })
-              requestsReceive.push({request: item, medias })
+              requestsReceive.push({ request: item, sender, receiver, medias })
             }
           }
           results.push({user: item, requestsSend, requestsReceive})
@@ -107,16 +116,22 @@ async getUserById(req, res) {
         let requestsReceive = []
         if (requestsSends.length > 0) {
           for (const item of requestsSends) {
-            const id = item.id
+            const idSender = item.idSender
+            const idReceiver = item.receiverId
+            const sender = await User.findUnique({ where: { id: parseInt(idSender) } })
+            const receiver = await User.findUnique({ where: { id: parseInt(idReceiver) } })
             const medias = await Media.findMany({ where: { requestId: parseInt(id) } })
-            requestsSend.push({ request: item, medias })
+            requestsSend.push({ request: item, medias, sender, receiver })
           }
         }
         if (requestsReceives.length > 0) {
           for (const item of requestsReceives) {
-            const id = item.id
+            const idSender = item.senderId
+            const idReceiver = item.receiverId
+            const sender = await User.findUnique({ where: { id: parseInt(idSender) } })
+            const receiver = await User.findUnique({ where: { id: parseInt(idReceiver) } })
             const medias = await Media.findMany({ where: { requestId: parseInt(id) } })
-            requestsReceive.push({ request: item, medias })
+            requestsReceive.push({ request: item, medias, sender, receiver })
           }
         }
         results.push({ user: data, requestsSend, requestsReceive })
