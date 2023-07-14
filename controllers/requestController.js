@@ -37,6 +37,7 @@ export default {
   },
   async getRequestById(req, res) {
     const id = req.params.id
+
     try {
       let results = []
       const data = await Request.findUnique({ where: { id: parseInt(id) } })
@@ -64,7 +65,12 @@ export default {
     console.log(req.body)
     let result = {}
     let mediasList = []
-    const files = req.files
+    //const files = req.files
+     const files = [
+       'files-1689112954108-292015028.jpg',
+       'files-1689113748794-929513292.pdf',
+       'files-1689113087387-853065894.docx',
+     ]
     const request = {
       object: req.body.object,
       content: req.body.content,
@@ -80,11 +86,12 @@ export default {
       if (data) {
         if (files.length > 0) {
           for (const item of files) {
+
             const media = {
-              url: item.filename,
+              //url: item.filename,
+              url: item,
               requestId: data.id,
             }
-
             const medias = await Media.create({ data: media })
             mediasList.push(medias)
           }
