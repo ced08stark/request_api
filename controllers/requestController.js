@@ -37,14 +37,19 @@ export default {
   },
   async getRequestById(req, res) {
     const id = req.params.id
-
+    console.log(id)
+    
     try {
       let results = []
+      
       const data = await Request.findUnique({ where: { id: parseInt(id) } })
+      console.log(data)
       if (data) {
-        const id = item.id
-        const medias = await Media.findMany({ where: { id: parseInt(id) } })
-        if (medias.length > 0) {
+        console.log(data)
+        const id = data?.id
+        const medias = await Media.findMany({ where: { requestId: parseInt(id) } })
+         console.log(medias)
+        if (medias) {
           results.push({ data, medias })
         } else {
           results.push(data)
