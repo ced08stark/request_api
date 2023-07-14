@@ -25,7 +25,7 @@ signUpUser(req, res){
                   password: hash,
                   username: req.body.username,
                   phone: req.body.phone,
-                  image: null,
+                  image: req.file.filename,
                   role: req.body.role,
                 }
                 
